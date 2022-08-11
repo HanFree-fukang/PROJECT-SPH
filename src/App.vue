@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header/>
-    根组件
+    <router-view></router-view>
     <Footer/>
   </div>
 </template>
