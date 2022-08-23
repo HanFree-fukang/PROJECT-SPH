@@ -33,7 +33,7 @@
       </h1>
       <div class="searchArea">
         <form action="###" class="searchForm">
-          <input type="text" id="autocomplete" class="input-error input-xxlarge" />
+          <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword" />
           <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">搜索</button>
         </form>
       </div>
@@ -44,11 +44,81 @@
 export default {
   name: 'MyHeader',
   data() {
-    return {}
+    return {
+      keyword: ''
+    }
   },
   methods :{
     goSearch () {
-      this.$router.push('/search')
+      // 路由传递参数
+      // 第一种： 字符串
+      // this.$router.push('/search/' + this.keyword + '?k=' + this.keyword.toUpperCase())
+      // 第二种模板字符串
+      // this.$router.push(`/search/${this.keyword}?k=${this.keyword.toUpperCase()}`)
+      // 第三种：对象
+      // this.$router.push({
+      //   name: 'search',
+      //   params: {
+      //     keywords: this.keyword
+      //   },
+      //   query: {
+      //     k : this.keyword.toUpperCase()
+      //   }
+      // })
+
+
+
+      // **************************************************************
+      // 面试题1:： 路由传递参数（对象写法）path是否可以结合params参数一起使用？
+      // this.$router.push({
+      //   // path:'/search',
+      //   name: 'search',
+      //   params: {
+      //     keywords: this.keyword
+      //   },
+      //   query: {
+      //     k: this.keyword
+      //   }
+      // })
+
+      //面试题2： 如何指定params参数可传可不传？
+      // 如果路由规则配置了params站位要求传递参数，如果不传递，url会出现问题
+      // 配置可传可不传可一件在params站位后面加上“ ？ ”
+      // this.$router.push({
+      //   name:'search',
+      //   query: {
+      //     k : this.keyword.toUpperCase()
+      //   },
+      //   params: {
+      //     keywords: this.keyword
+      //   }
+      // })
+
+      // 面试题3： params参数可以传递也可以不传递，但是如果传递是空串如何解决？
+      // this.$router.push({
+      //   name: 'search',
+      //   params: {
+      //     keywords: '' || undefined
+      //   },
+      //   query: {
+      //     k: this.keyword.toUpperCase()
+      //   }
+      // })
+
+      // 面试题4： 路由可以使用props传递参数吗？
+      // 可以有三种方法
+      // 布尔值，对象，函数
+
+      let result = this.$router.push({
+        name:'search',
+        query: {
+          k : this.keyword.toUpperCase()
+        },
+        params: {
+          keyword: this.keyword
+        }
+      })
+      console.log(result);
     }
   }
 }
